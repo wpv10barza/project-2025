@@ -1,11 +1,11 @@
 # project-2025
 
-Código fuente recuperado de Google Drive y clasificado por periodo 2025.
+Repositorio reservado para proyectos cuyo desarrollo efectivo corresponda a 2025.
 
-## Proyectos
+## Estado actual
 
-- `DATA INSPECCION/` — consolidación de inspecciones desde libros Excel.
-- `Untitled0/` — notebook de transcripción Whisper.
-- `Untitled1/` — notebook de transcripción Whisper y procesamiento SRT.
+La rama `main` contiene actualmente solo este README. Durante la inspección de los repositorios accesibles de `wpv10barza` no se encontró otro proyecto de software cuyo desarrollo pueda atribuirse de forma suficientemente inequívoca a 2025 y que además deba trasladarse aquí sin mezclarlo con un proyecto de otra línea temporal o tecnológica.
 
-Se excluyeron dependencias descargadas, cachés, archivos de IDE, salidas generadas y secretos.
+No se reconstruyen nombres de carpetas que aparecieron en una versión anterior de este README (`DATA INSPECCION/`, `Untitled0/`, `Untitled1/`) porque esos archivos no están presentes en el árbol remoto actual y no existe evidencia suficiente, en los repositorios accesibles, para reproducirlos sin inventar contenido.
+
+Se excluyen dependencias descargadas, cachés, artefactos generados, credenciales y secretos.
