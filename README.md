@@ -1,11 +1,13 @@
 # project-2025
 
-Repositorio reservado para proyectos cuyo desarrollo efectivo corresponda a 2025.
+Código fuente recuperado de Google Drive y clasificado por evidencia temporal de 2025.
 
-## Estado actual
+## Proyectos
 
-La rama `main` contiene actualmente solo este README. Durante la inspección de los repositorios accesibles de `wpv10barza` no se encontró otro proyecto de software cuyo desarrollo pueda atribuirse de forma suficientemente inequívoca a 2025 y que además deba trasladarse aquí sin mezclarlo con un proyecto de otra línea temporal o tecnológica.
+- `colab_whisper/` — código fuente extraído de dos notebooks de Google Colab creados y modificados el 12 de diciembre de 2025. Incluye instalación/uso de OpenAI Whisper para transcripción en español, combinación de archivos SRT y una clasificación heurística de intervenciones en roles E1, E2 e I1.
 
-No se reconstruyen nombres de carpetas que aparecieron en una versión anterior de este README (`DATA INSPECCION/`, `Untitled0/`, `Untitled1/`) porque esos archivos no están presentes en el árbol remoto actual y no existe evidencia suficiente, en los repositorios accesibles, para reproducirlos sin inventar contenido.
+## Conservación del origen
+
+Los archivos originales `Untitled0.ipynb` y `Untitled1.ipynb` permanecen en Google Drive porque GitHub contiene por ahora el código fuente extraído de sus celdas, no una copia completa y verificada de los notebooks con todos sus metadatos/salidas. Por la regla de protección contra pérdida de datos, no deben eliminarse del Drive.
 
 Se excluyen dependencias descargadas, cachés, artefactos generados, credenciales y secretos.
