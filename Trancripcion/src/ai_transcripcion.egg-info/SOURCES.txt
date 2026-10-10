@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+src/ai_transcripcion/__init__.py
+src/ai_transcripcion/cli.py
+src/ai_transcripcion.egg-info/PKG-INFO
+src/ai_transcripcion.egg-info/SOURCES.txt
+src/ai_transcripcion.egg-info/dependency_links.txt
+src/ai_transcripcion.egg-info/entry_points.txt
+src/ai_transcripcion.egg-info/requires.txt
+src/ai_transcripcion.egg-info/top_level.txt

@@ -1,0 +1,6 @@
+{
+  "server": "gaeval.database.windows.net",
+  "database": "gaeval",
+  "username": "gaevaluser",
+  "password": "PON_TU_PASSWORD"
+}

@@ -1,0 +1,6 @@
+openai>=1.40.0
+openpyxl>=3.1.2
+numpy>=1.26
+torch>=2.2.0
+# Whisper desde git (Windows): se instala con pip usando la URL en requirements funciona en la mayoría de casos.
+git+https://github.com/openai/whisper.git
