@@ -8,7 +8,7 @@ Código fuente recuperado de Google Drive y clasificado por evidencia temporal d
 
 ## Conservación del origen
 
-Los archivos originales `Untitled0.ipynb` y `Untitled1.ipynb` permanecen en Google Drive porque GitHub contiene por ahora el código fuente extraído de sus celdas, no una copia completa y verificada de los notebooks con todos sus metadatos/salidas. Por la regla de protección contra pérdida de datos, no deben eliminarse del Drive.
+Los notebooks originales `Untitled0.ipynb` y `Untitled1.ipynb` se han incorporado íntegros en `Colab_Untitled0/` y `Colab_Untitled1/`, incluidos metadatos y salidas. La eliminación de cada original se realiza únicamente después de verificar su copia completa por tamaño y hash.
 
 Se excluyen dependencias descargadas, cachés, artefactos generados, credenciales y secretos.
 
@@ -55,3 +55,8 @@ Cada carpeta conserva su identidad y estructura. Su README detalla tecnologías,
 - `01.02 Promp/`: 24 archivos originales seleccionados; periodo 2025-12-18 a 2025-12-30. Se conserva el origen porque hay archivos excluidos.
 
 Los README de cada carpeta documentan propósito, formatos, estructura y módulos a partir de los originales. Las variantes se mantienen separadas del trabajo existente.
+
+
+## Notebooks completos de Google Colab
+
+`Colab_Untitled0/` y `Colab_Untitled1/` conservan los notebooks originales modificados el 12 de diciembre de 2025, además de README individuales. El código extraído anteriormente en `colab_whisper/` se mantiene. Los videos y el notebook de septiembre de 2026 se conservan en Drive.
