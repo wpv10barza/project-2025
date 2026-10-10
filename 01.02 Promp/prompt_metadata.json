@@ -1,0 +1,11 @@
+{
+  "generated_at": "2025-12-30T13:59:24",
+  "evaluacion_id": 17,
+  "data_piloto_dir": "C:\\Users\\ASUS\\GESTIONA ACTIVOS S.A.C\\TGA_GACSAC - TGA_TI - 03. Proyectos\\P13. Sistema Evaluación v2\\03.00 EJECUCION\\03.02 PRUEBA CON REGISTROS",
+  "files": {
+    "objetivo": "C:\\Users\\ASUS\\GESTIONA ACTIVOS S.A.C\\TGA_GACSAC - TGA_TI - 03. Proyectos\\P13. Sistema Evaluación v2\\03.00 EJECUCION\\03.02 PRUEBA CON REGISTROS\\OBJETIVO_FINAL.txt",
+    "transcripcion": "C:\\Users\\ASUS\\GESTIONA ACTIVOS S.A.C\\TGA_GACSAC - TGA_TI - 03. Proyectos\\P13. Sistema Evaluación v2\\03.00 EJECUCION\\03.02 PRUEBA CON REGISTROS\\Transcripcion.txt",
+    "db_config": "C:\\Users\\ASUS\\GESTIONA ACTIVOS S.A.C\\TGA_GACSAC - TGA_TI - 03. Proyectos\\P13. Sistema Evaluación v2\\03.00 EJECUCION\\03.02 PRUEBA CON REGISTROS\\p13_sistematizador_selenium_v16\\db_config.json"
+  },
+  "output_prompt": "C:\\Users\\ASUS\\GESTIONA ACTIVOS S.A.C\\TGA_GACSAC - TGA_TI - 03. Proyectos\\P13. Sistema Evaluación v2\\03.00 EJECUCION\\03.02 PRUEBA CON REGISTROS\\01.02 Promp\\prompt_completo.txt"
+}

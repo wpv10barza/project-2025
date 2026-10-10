@@ -48,3 +48,10 @@ Se excluyen dependencias descargadas, cachés, artefactos generados, credenciale
 | `SAP DX/` | Conjunto de módulos RPAs_V2/RPA_HDR/RPA_HDR_v0.2.py, RPAs/RPA_UT_CRIT/RPA_UT_CRIT.py, RPAs/RPA_PPM/RPA_PPM_crear.py, RPAs/RPA_PPM/RPA_PPM.py | 2025-11-15 a 2025-11-15 | 41 | Configuración sensible o archivos pendientes excluidos; original conservado en Drive. |
 
 Cada carpeta conserva su identidad y estructura. Su README detalla tecnologías, módulos y origen. No se publican contraseñas ni claves de API. La fecha de carga en Drive puede ser posterior al periodo del código.
+
+
+## Copias adicionales recuperadas de Drive
+
+- `01.02 Promp/`: 24 archivos originales seleccionados; periodo 2025-12-18 a 2025-12-30. Se conserva el origen porque hay archivos excluidos.
+
+Los README de cada carpeta documentan propósito, formatos, estructura y módulos a partir de los originales. Las variantes se mantienen separadas del trabajo existente.

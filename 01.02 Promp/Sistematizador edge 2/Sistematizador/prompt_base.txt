@@ -1,0 +1,803 @@
+﻿
+OBJETIVO FINAL
+Construir una **Matriz de Sistematización de Entrevistas** que asocie evidencia textual proveniente de transcripciones reales con la **guía de preguntas del estudio estructuradas por PREGUNTA_CODIGO X.X.X**.
+
+ENTRADAS (OBLIGATORIAS)
+1) ARCHIVOS (fuentes permitidas)
+- Transcripciones: PDF y/o TXT (solo estos archivos pueden aportar evidencia literal).
+- Guía de preguntas (si está en un archivo aparte): PDF y/o TXT.
+IMPORTANTE:
+- Usa las transcripciones SOLO como fuente de evidencia literal.
+- La guía se usa SOLO para completar: PREGUNTA_DESCRIPCION y PREGUNTA_SITUACION_DESEADA.
+
+2) DECLARACIÓN DE PARTICIPANTES (proporcionada por el usuario)
+Debes recibir una lista explícita tipo:
+- E1: Entrevistador principal
+- E2: Entrevistador secundario
+- I1: Informante 1
+- I2: Informante 2
+Regla: usa esta asignación para clasificar cada intervención por rol y por persona.
+
+SALIDA ESPERADA (FORMATO)
+Entrega la matriz como una tabla (Markdown o CSV) con columnas dinámicas:
+1. PREGUNTA_CODIGO
+2. CONVERSACION_ENTREVISTADOR_1
+3. CONVERSACION_ENTREVISTADOR_2
+   … (una por cada entrevistador declarado)
+4. CONVERSACION_INFORMANTE_1
+5. CONVERSACION_INFORMANTE_2
+   … (una por cada informante declarado)
+6. PREGUNTA_DESCRIPCION
+7. PREGUNTA_SITUACION_DESEADA
+8. ANALISIS_DE_COBERTURA
+
+REGLAS DE INCORPORACIÓN DE TEXTO (OBLIGATORIAS)
+A) ENTREVISTADORES (E*)
+- Incluir SOLO: preguntas, solicitudes de aclaración, indicaciones y comentarios del entrevistador.
+- Cita textual LITERAL (sin resumir ni parafrasear).
+- Permitido: correcciones mínimas de OCR SOLO si son evidentes (ej. letras partidas), sin cambiar el sentido.
+- No mezclar con análisis ni interpretación.
+- Cada entrevistador en su propia columna.
+
+B) INFORMANTES (I*)
+- Incluir SOLO: respuestas, explicaciones y aportes del informante.
+- Cita textual LITERAL, respetando formulaciones, números, muletillas, y términos tal como aparecen.
+- No normalizar, no suavizar lenguaje.
+- Cada informante en su propia columna.
+
+C) PROHIBICIONES GENERALES
+- No inventar contenido.
+- No inferir significados no expresados literalmente.
+- No usar frases interpretativas (“se entiende que…”, “probablemente…”, etc.).
+- No mezclar citas con análisis en la misma celda.
+- No introducir procesos, riesgos, operaciones o números no contenidos explícitamente en la transcripción.
+
+LÓGICA DE SISTEMATIZACIÓN (NÚCLEO METODOLÓGICO)
+1) Guía flexible, no guion:
+- Asume que las preguntas guía pueden NO aparecer literales, NO estar en orden y estar cubiertas de forma fragmentada.
+2) Mapeo por evidencia:
+- Para cada PREGUNTA_CODIGO, busca en toda la(s) transcripción(es) fragmentos que respondan o se relacionen con esa pregunta (aunque la pregunta no haya sido formulada literalmente).
+- Una misma intervención puede alimentar varias preguntas: SI aplica, repite el fragmento en cada fila correspondiente.
+- Una pregunta puede tener evidencia dispersa: une múltiples fragmentos en la misma celda.
+3) Ensamblaje en celdas:
+- Dentro de cada celda, pega múltiples fragmentos en líneas separadas (o viñetas), manteniendo el orden de aparición en la transcripción.
+- Cada fragmento debe incluir trazabilidad mínima al final, sin interpretación, por ejemplo:
+  [Fuente: NOMBRE_ARCHIVO, p.# / sección / marca temporal si existe]
+
+ANÁLISIS_DE_COBERTURA (SOLO CON BASE EN LO YA CITADO)
+En cada fila, coloca EXACTAMENTE una de estas etiquetas:
+- TOTALMENTE CUBIERTA
+- PARCIALMENTE CUBIERTA
+- NO CUBIERTA TEXTUALMENTE
+Y agrega una justificación que NO interprete: debe limitarse a referenciar o repetir fragmentos que YA estén en las columnas de conversación.
+Formato sugerido (sin agregar ideas nuevas):
+- “Evidencia: ‘…’ / ‘…’”
+- Si NO cubierta: “No se encontró evidencia literal en la(s) transcripción(es) para este código.”
+
+PROCEDIMIENTO PASO A PASO (LO QUE DEBES HACER)
+1) Leer la guía y listar todas las filas (una por cada PREGUNTA_CODIGO), con su DESCRIPCION y SITUACION_DESEADA.
+2) Leer todas las transcripciones y segmentar por intervenciones (speaker/turnos).
+3) Clasificar cada intervención según la DECLARACIÓN DE PARTICIPANTES (E1, E2, I1, I2…).
+4) Para cada PREGUNTA_CODIGO:
+   - Recolectar TODA evidencia literal relevante, aunque esté dispersa.
+   - Pegar SOLO lo dicho por entrevistadores en columnas E* y SOLO lo dicho por informantes en columnas I*.
+   - Mantener literalidad y trazabilidad.
+   - Completar ANALISIS_DE_COBERTURA según la suficiencia de evidencia textual para cubrir DESCRIPCION y SITUACION_DESEADA.
+
+CHEQUEO FINAL (ANTES DE ENTREGAR)
+- ¿Hay una fila por cada PREGUNTA_CODIGO de la guía?
+- ¿Las columnas de conversación son dinámicas y coinciden con E* e I* declarados?
+- ¿Todas las celdas de conversación contienen solo citas textuales (sin resumen)?
+- ¿ANALISIS_DE_COBERTURA no añade ideas nuevas y se apoya solo en citas ya incluidas?
+
+DATOS A COMPLETAR POR EL USUARIO (PEGAR AQUÍ)
+A) Lista de archivos adjuntos (transcripciones y guía):
+- PREGUNTA_CODIGO
+- Transcripción
+- [PEGAR LISTA / CONFIRMAR NOMBRES]
+
+B) Declaración de participantes:
+- [E1: "Entrevistador principal"]
+- [E2: "Entrevistador: Marcel"]
+- [I1: "Informante 1"]
+
+### GUIA (desde SQL: VW_PREGUNTA_POR_EVALUACION)
+PREGUNTA_CODIGO	PREGUNTA_COMPLETA	SITUACION_DESEADA
+2.1.1.1.01	¿Existe un procedimiento documentado de planeamiento del trabajo que incluya flujogramas de proceso?	Documento controlado “Procedimiento de Planificación” con: objetivo, alcance (correctivo/PM/PDm/paradas), definiciones, entradas/salidas, roles, KPIs; flujograma tipo swimlane (Operaciones–Planificador–Programación–Ejecución–Almacén–HSE). Muestra mínima: 1 procedimiento vigente + 1 flujograma por proceso (correctivo y PM).
+2.1.1.1.02	¿El procedimiento de planeamiento es un documento controlado (versión, aprobaciones, vigencia y difusión)?	Carátula con código, versión, fecha vigencia, firmas de aprobación (Gerencia Mantto/HSE/Ops según aplique), historial de cambios, lista de distribución. Evidencia de difusión: registro de capacitación/inducción + evaluación o firma de lectura. Muestra mínima: última versión + versión anterior + 10 registros de difusión (por turno/área).
+2.1.1.1.03	¿El procedimiento establece que todo trabajo (preventivo y correctivo) debe ser formalmente planeado antes de ejecutarse?	Política “No work without WO/OT” + definición clara de excepción (emergencia real). Evidencia SAP: % de HH ejecutadas con OT liberada y con plan (operaciones + HH plan). Muestra mínima: 15 OT ejecutadas por área (5 planificadas “buenas”, 5 planificadas “regulares”, 5 emergencias) con trazabilidad completa. Criterio mínimo: emergencias justificadas y acotadas.
+2.1.1.1.04	¿El procedimiento exige que todo trabajo pase por un resposable central de planificación  para evaluar la condición del equipo vs. la prioridad de trabajo,  disponibilidad de recursos y eliminación de solicitudes duplicadas?	Definición formal del Planner Group / punto central (RACI), agenda/actas de reunión de “triage” (backlog review). Evidencia de duplicados: reporte mensual de OT/avisos duplicados cerrados/mergeados y criterio usado. Muestra mínima: 10 casos donde se rechazó/devolvió/mergeó por duplicado o mala calidad (con registro).
+2.1.1.1.05	¿El procedimiento define que el método de trabajo (incluyendo el control de calidad de la ejecuón) y las recomendaciones de seguridad y medio ambiente se desarrolle y emitan mediante un plan de trabajo estándar?	Plantilla de Plan de Trabajo con secciones obligatorias: método paso a paso, controles de calidad, puntos hold, riesgos y controles HSE, permisos, criterios de aceptación. Biblioteca de Trabajos Estándar con control de versión. Muestra mínima: 10 OT de alto riesgo (izaje, energías peligrosas, altura, químicos) donde el método esté documentado y referenciado.
+2.1.1.1.06	¿El procedimiento exige que la mano de obra y los costos del trabajo sean estimados antes de programar/ejecutar?	Estándar de estimación (HH por especialidad, duración, costos directos) + evidencia de captura en OT antes de liberar/programar. Muestra mínima: 20 OT por área con plan vs real (HH y duración) y análisis de desviación (=5 casos con acción correctiva). Criterio mínimo: estimación existe y se usa para programar (no “relleno” posterior).
+2.1.1.1.07	¿El procedimiento establece que tareas en equipos similares y/o en una misma área geográfica deben ser vinculadas/agrupadas cuando corresponda?	Criterio escrito de agrupación/campañas (por ubicación, sistema, ventana operacional, recursos compartidos). Evidencia: programa semanal mostrando paquetes (ej. “campaña bombas”, “campaña válvulas”). Muestra mínima: 5 semanas (1 por mes) con evidencia de agrupación y reducción de traslados/esperas.
+2.1.1.1.08	¿El procedimiento define que se deben realizar inspecciones previas para tareas apropiadas (pre-inspección para asegurar alcance y recursos, integrar trabajos menores identificados)?	Procedimiento de preinspección + checklist + criterio de “trabajo menor” (umbral HH/costo/permiso). Muestra mínima: 15 casos donde preinspección cambió alcance, materiales o recursos, y quedó registrado.
+2.1.1.1.09	¿El procedimiento define unidades y registros obligatorios para medir el rendimiento del trabajo (por ejemplo, duración del trabajo u otros)?	Diccionario de datos PM (qué campo significa qué), lista de campos obligatorios (OT/operación), reglas de medición (HH, duración, demoras). Auditoría de calidad: completitud y consistencia (mensual). Muestra mínima: 50 OT cerradas con revisión de campos clave (sin vacíos injustificados).
+2.1.1.1.10	¿El procedimiento establece que el planificador debe asignar la prioridad del trabajo usando criterios definidos y contexto operacional?	Matriz de prioridad ligada a consecuencias (HSE/producción/costo/ambiente/calidad) + reglas de escalamiento. Evidencia: distribución real P1–P4 y overrides justificados. Muestra mínima: 10 OT P1/P2 verificadas (justificación coherente con criterio).
+2.1.1.1.11	¿El procedimiento exige asignar un grupo responsable (cuadrilla / especialidad / contratista) para ejecutar el trabajo?	Catálogo de especialidades/work centers + regla de asignación + evidencia en OT antes de programar. Muestra mínima: 30 OT revisadas: 100% con centro de trabajo/especialidad correcto y responsable asignado.
+2.1.1.1.12	¿El procedimiento facilita la determinación y obtención de partes mediante listas de partes (BOMs) u otro método formal equivalente?	Política BOM/APL + gobierno (altas/bajas/cambios) + evidencia de BOM por equipos críticos. Evidencia operativa: OT con componentes reservados antes de ejecución + medición de quiebres (faltantes/sustituciones). Muestra mínima: 20 OT con materiales: revisar si BOM/APL se usó y si hubo quiebres.
+2.1.1.1.13	¿El procedimiento establece que todo trabajo debe ser autorizado en función de prioridad y costos antes de ejecutarse?	Matriz de autoridad (por umbral de costo/riesgo) + evidencia de liberación/aprobación en SAP antes de ejecución. Muestra mínima: 20 OT con distinto nivel de costo: verificar trazabilidad de aprobación y fecha.
+2.1.1.1.14	¿El procedimiento exige revisar información de inspecciones anteriores y de mantenimientos correctivos previos para planificar el trabajo?	Requisito formal (“consultar historial”) + evidencia en plan (referencia a OT previas, fallas repetitivas, condición). Muestra mínima: 15 OT en activos críticos con historial consultado (captura de pantalla/export SAP o referencia en texto largo).
+2.1.1.1.15	¿El procedimiento exige elaborar una lista de órdenes de trabajo asociadas a paradas relacionadas al equipo para apoyar la eliminación de fallas?	Proceso de paradas: scope list, freeze, priorización por riesgo, “defect elimination list”, cierre técnico. Muestra mínima: última parada mayor: paquete de OT planificadas + reporte de cierre (cumplimiento, hallazgos, repetitividad).
+2.1.1.1.16	¿El procedimiento define criterios para el uso de órdenes de trabajo continuas (standing work orders), evitando su uso indebido?	Criterio escrito (qué sí/qué no), lista oficial de OT continuas vigentes, auditoría mensual de costos/HH por OT continua, plan de eliminación de abuso (convertir a OT normales/estándares). Muestra mínima: top 10 OT continuas por costo/HH: revisión completa.
+2.1.1.2.1	¿El nivel de horas-hombre dedicadas a trabajos planificados es alrededor del 80% del total de H-H disponible del trabajo de mantenimiento (según medición periódica)?	Definición formal “planificado” + metodología de cálculo (HH disponibles vs HH ejecutadas). Reporte mensual por área/especialidad con tendencia 6–12 meses + brechas y acciones. Muestra mínima: 2 meses auditados “hasta el hueso” (trazando HH desde confirmaciones).
+2.1.1.3.01	¿Los planes de trabajo y las órdenes de trabajo incluyen requisitos de seguridad y medio ambiente derivados de análisis de riesgos (bloqueo/señalización, excavación, trabajos peligrosos, químicos peligrosos, EPP, impacto de desconexión de dispositivos/sis	Matriz IPERC/JSA por tarea + estándar LOTO + permisos + evidencia en OT/plan (texto/adjuntos). Muestra mínima: 15 OT de alto riesgo: 100% con controles HSE definidos y permisos asociados.
+2.1.1.3.02	¿Los planes incluyen las inspecciones previas requeridas (pre-inspecciones), cuando corresponda?	Criterio de cuándo aplica + checklist + evidencia adjunta o referencia. Muestra mínima: 10 OT donde preinspección era obligatoria: verificar que existe y alimentó el plan.
+2.1.1.3.03	¿Los planes definen el método de trabajo a utilizar (o referencian un manual/Normas/ estándard/mejor práctica aceptada y/o límites aceptables)?	Estándares técnicos (p.ej. torqueado, alineación, izaje, instrumentación) + plan de trabajo con pasos y tolerancias. Muestra mínima: 15 OT: método documentado y medible (no “reparar”).
+2.1.1.3.04	¿Los planes consideran la coordinación entre grupos de trabajo de diferente especialidad (interferencias, ventanas operacionales, permisos)?	Matriz de interferencias + minuta de coordinación semanal + evidencia de secuencias (mec-eléctrica-instr). Muestra mínima: 10 OT multidisciplina: verificar coordinación y permisos.
+2.1.1.3.05	¿Los planes incluyen la comunicación con terceros (contratistas, operaciones, proveedores), cuando aplique?	Plan de comunicación + SLA/alcance contratista + evidencias (correos/actas/órdenes compra si aplica). Muestra mínima: 10 OT con contratistas: trazabilidad del alcance y coordinación.
+2.1.1.3.06	¿Los planes incluyen la duración estimada del trabajo (y un cuadro Gantt si es apropiado para trabajos mayores)?	Criterio “trabajo mayor” + cronograma (Gantt) + ruta crítica + ventanas. Muestra mínima: 5 trabajos mayores: comparar duración estimada vs real y lecciones aprendidas.
+2.1.1.3.07	¿Los planes incluyen requisitos de mano de obra (cantidad y especialidad) y el costo estimado?	Plan con HH por operación/especialidad + costo estimado antes de liberar. Muestra mínima: 20 OT: revisar consistencia HH/costo y desviación plan-real con causa.
+2.1.1.3.08	¿Los planes incluyen los materiales requeridos para el trabajo (repuestos/consumibles), idealmente vinculados a BOM?	Lista de materiales + reservas + kitting (si aplica) + indicador quiebre. Muestra mínima: 20 OT: verificar materiales definidos antes del inicio y si hubo faltantes.
+2.1.1.3.09	¿Los planes incluyen herramientas especiales requeridas y su ubicación/disponibilidad?	Registro de herramientas críticas + proceso de reserva/uso + referencia en plan. Muestra mínima: 10 OT que requieren herramienta especial: evidencia de disponibilidad y control.
+2.1.1.3.10	¿Los planes incluyen infraestructura/equipos requeridos (grúas, andamios, espacio de taller, etc.) y su ubicación/disponibilidad?	Plan de izaje/andamios + permisos + confirmación de disponibilidad. Muestra mínima: 10 OT con izaje/andamios: evidencia de recursos y permisos.
+2.1.1.3.11	¿Los planes incluyen el método de transporte de partes, materiales, herramientas y equipos al lugar de trabajo?	Estándar de logística/kitting + evidencia en trabajos de parada o remotos. Muestra mínima: 10 OT con materiales voluminosos/críticos: transporte definido y ejecutado.
+2.1.1.3.12	¿Los planes incluyen una lista de números de plano (planos aplicables) apropiados?	Listado de planos controlados + referencia explícita en OT/plan + control de versión. Muestra mínima: 10 OT de equipos críticos: plano correcto y vigente referenciado.
+2.1.1.3.13	¿Los planes incluyen especificaciones técnicas de equipos e información de operación relevante?	Datasheets/tolerancias/setpoints + criterios de aceptación + referencia en plan. Muestra mínima: 10 OT de precisión (alineación, instrumentación, válvulas): specs presentes.
+2.1.1.3.14	¿Los planes incluyen inspección posterior, comisionamiento e información de prueba, incluyendo información específica para puntos de calidad de producción cuando aplique?	Checklist de puesta en marcha + criterios de aceptación + liberación operativa (Ops). Muestra mínima: 15 OT: evidencia de prueba y aceptación (no solo “cerrado”).
+2.1.1.4.1	Trabajo planificado es todo aquel trabajo que, antes de que el trabajo sea llevado a cabo, tiene detalles completos predeterminados, a través de un Trabajo Estándar (Standard Job) o una orden de trabajo completamente detallada.	Definición formal + checklist de auditoría de OT planificada (campos obligatorios, método, recursos, materiales, HSE). Muestra mínima: 30 OT evaluadas con checklist y score.
+2.1.1.4.2	¿El nivel de trabajo planificado se monitorea con una periodicidad establecida?	Calendario fijo (semanal/mensual) + responsables + reporte emitido (no “a veces”). Muestra mínima: últimos 6 reportes consecutivos.
+2.1.1.4.3	¿Los resultados del nivel de trabajo planificado se comparan con estándares u objetivos definidos?	Metas aprobadas por gerencia + semáforo por área + brechas. Muestra mínima: 6 meses con meta vs real y análisis.
+2.1.1.4.4	¿Las variaciones (brechas vs estándar/objetivo) son documentadas y reportadas?	Registro de brechas + acciones + dueños + fechas + verificación de cierre. Muestra mínima: 10 brechas con evidencia de cierre/impacto.
+2.1.1.5.1	¿Se evalúa la profundidad/calidad del proceso de planeamiento comparando duración y costo estimados versus reales, y se usan los hallazgos para mejorar?	Reporte mensual plan-real (HH, duración, costos) + Pareto de causas + acciones implementadas. Muestra mínima: 20 OT con gran desviación: análisis y acción.
+2.1.1.5.2	¿Las órdenes de trabajo continuas (standing work orders) se monitorean de cerca y su uso se controla para asegurar que no haya abuso?	Lista de OT continuas + KPI de consumo HH/costo + revisión mensual + conversiones a OT normales/estándar. Muestra mínima: top 10 OT continuas por HH.
+2.1.1.5.3	¿Los trabajos estándares se monitorean para determinar su nivel de uso, calidad de los detalles y la extensión de uso entre equipos y especialidades?	KPI % de OT que usan estándar + auditoría de calidad de biblioteca + control de versiones. Muestra mínima: top 10 trabajos estándar y 10 OT asociadas revisadas.
+2.1.1.5.4	¿Las listas de materiales (BOMs) usadas en los planes de trabajo se revisan y actualizan cuando corresponde (exactitud y aplicabilidad)?	Procedimiento de gobierno BOM + auditoría física vs BOM + registro de cambios. Muestra mínima: 10 equipos críticos: BOM vs realidad + correcciones.
+2.1.1.6.1	¿Se hacen mejoras al proceso de planeamiento considerando comparaciones de estimados (plan vs real) y acciones derivadas?	Backlog de mejoras + acciones + evidencia “antes/después” en desviaciones. Muestra mínima: 5 mejoras cerradas con impacto medido.
+2.1.1.6.2	¿Se hace revisión y mejora del uso de órdenes de trabajo continuas (standing work orders), evitando usos indebidos?	Plan formal de reducción + criterios endurecidos + auditorías + reducción demostrable. Muestra mínima: comparación 6 meses (cantidad/HH/costo).
+2.1.1.6.3	¿Se hace revisión y mejora del uso y calidad de trabajos estándares (Standard Jobs), y se amplía su aplicación cuando corresponde?	Roadmap + revisiones de calidad + aumento de cobertura por familias de equipos. Muestra mínima: 5 nuevos estándares implementados + OT que los usaron.
+2.1.1.6.4	¿Se hace revisión y mejora del uso de listas de materiales (BOM) en la planificación, para reducir faltantes y retrabajos?	KPI quiebre de materiales + mejoras BOM/APL + evidencia reducción de demoras por materiales. Muestra mínima: 10 OT con quiebre: causa, corrección BOM y verificación.
+2.1.1.6.5	¿Se identifican y tratan las causas de demoras en los trabajos (logística, permisos, recursos, ventanas), y se implementan acciones de mejora?	Catálogo de códigos de demora + Pareto mensual + acciones y verificación de efectividad. Muestra mínima: top 10 demoras por área con acción correctiva cerrada.
+2.1.2.1.1	¿Existe una meta definida para que aproximadamente 80% de los trabajos planeados se ejecuten usando planes de trabajo estándar (Standard Jobs), y se mide su cumplimiento?	• Meta formal aprobada (KPI “% OT planificadas con Trabajo Estándar”) con fórmula, frecuencia y dueño (Planner/Confiabilidad).• Tablero mensual (mín. 6–12 meses) por área y especialidad: % uso, tendencia, brechas y acciones.• Reglas de medición: qué cuenta como “trabajo estándar usado” (referencia obligatoria a lista de tareas / plantilla estándar / ID estándar).• Auditoría de trazabilidad: muestra de 30 OT “planificadas” (por área) verificando que efectivamente referencian un estándar y no es declaración manual.
+2.1.2.1.2	¿Se usan planes de trabajo estándar para crear órdenes de trabajo de mantenimiento correctivo y preventivo, cuando sea aplicable y estén disponibles, y se evidencia su reutilización?	• Procedimiento que obligue “usar estándar si existe” + criterio de excepción (cuando no aplica).• Evidencia de reutilización real: ranking de “Top 20 Trabajos Estándar más usados” y “Top 20 menos usados” (para detectar biblioteca muerta).• Muestra defendible: 10 OT correctivas + 10 OT preventivas (por área) creadas desde estándar, mostrando: estándar ? OT ? ejecución ? cierre.• Evidencia de control de versiones del estándar (cambios aprobados y comunicados).
+2.1.2.2.1	¿Los siguientes criterios son aplicados para determinar cuándo un trabajo se convierte en trabajo estándar?  - Riesgo significante de seguridad o medio ambiente.	• Criterio formal escrito con umbral (ej.: “si requiere permiso crítico / energía peligrosa / izaje / químico / alto potencial”).• Evidencia de decisión: registro “Solicitud/Alta de Trabajo Estándar” con evaluación HSE y aprobación (HSE + Mantto).• Muestra: 5 trabajos estandarizados por riesgo HSE con: JSA/IPERC ? estándar creado ? OT reutilizadas ? evidencia de control HSE en ejecución.
+2.1.2.2.2	¿El criterio considera impacto significativo sobre la producción, y se evidencia en la decisión de estandarizar?	• Umbral formal (p.ej. horas de detención evitables, pérdida de throughput, criticidad del sistema).• Evidencia de decisión: ficha de alta de estándar incluye impacto producción (TPH, horas, disponibilidad).• Muestra: 5 trabajos estandarizados por impacto producción con “antes/después” (reducción MTTR, mayor cumplimiento ventana, menos demoras).
+2.1.2.2.3	¿El criterio considera costo considerable de mantenimiento, y se evidencia en la decisión de estandarizar?	• Umbral formal de costo (directo/total) para gatillar estandarización.• Evidencia: análisis de costo histórico de OT repetitivas que justifica estándar (Pareto por $).• Muestra: 5 estándares creados por alto costo con comparación plan vs real y reducción de variabilidad/retrabajo.
+2.1.2.2.4	¿El criterio considera la complejidad del trabajo desde el punto de vista técnico o logístico, y se evidencia en la decisión de estandarizar?	• Criterios formales de complejidad (herramienta especial, izaje, andamios, coordinación multidisciplina, logística repuestos).• Evidencia: estándar incluye logística (kitting, grúa/andamio, secuencia, permisos) y criterios QA/QC.• Muestra: 5 trabajos complejos estandarizados con evidencia de reducción de demoras (códigos de demora o narrativa).
+2.1.2.2.5	¿El criterio considera si es una actividad rutinaria de mantenimiento preventivo o predictivo, y se evidencia en la decisión de estandarizar?	• Regla formal: toda actividad PM/PdM recurrente debe tener estándar asociado (si aplica).• Evidencia: biblioteca de estándares para inspecciones/rutas (lubricación, vibración, termografía, calibraciones).• Muestra: 10 estándares PM/PdM y sus OT generadas automáticamente (trazabilidad plan?llamada?OT?resultado).
+2.1.2.2.6	¿El criterio considera si es una tarea repetitiva, y se evidencia en la decisión de estandarizar?	• Umbral formal de repetitividad (p.ej. =3 veces/6 meses en mismo equipo o familia).• Evidencia: Pareto de OT repetidas por familia de equipos + decisión registrada de crear estándar.• Muestra: 5 tareas repetitivas convertidas a estándar con evidencia de reutilización (=5 OT posteriores usando el estándar).
+2.1.2.2.7	¿El criterio considera si es una tarea crítica para la calidad de la producción, y se evidencia en la decisión de estandarizar?	• Definición/umbral de “impacto calidad” (ley, granulometría, recuperación, contaminación, etc. según proceso).• Evidencia: estándar incluye puntos de control de calidad y criterios de aceptación/post-prueba.• Muestra: 5 estándares ligados a calidad con evidencia de pruebas/comisionamiento y liberación operativa.
+2.1.2.3.1	¿La base de datos o librería de planes de trabajos estándares es parte del CMMS o está vinculada adecuadamente al CMMS?	• Evidencia del repositorio “único” (en SAP o vinculado) + política de acceso y control de versiones.• Prueba de trazabilidad: OT referencia directamente al estándar (ID/version) y a documentos aplicables.• Muestra: 20 OT al azar que declaren uso de estándar: verificar que el link/ID existe y es la versión vigente.
+2.1.2.4.1	¿Los planes de trabajo estándar y otros trabajos planificados usan listas de materiales (BOMs) y se verifica su exactitud (material correcto, cantidades, aplicabilidad)?	• Procedimiento de gobierno BOM/APL (altas/bajas/cambios) + responsables (Mantto/Almacén/Ing.).• Evidencia de verificación de exactitud: auditoría BOM vs OT ejecutadas (material correcto/cantidades/sustituciones).• KPI: quiebres de materiales / faltantes / sustituciones y acciones (corrección BOM).• Muestra: 20 OT con materiales + 10 estándares: verificar que BOM/APL se usó y coincide con consumo real.
+2.1.3.1.1	¿Las demoras de trabajo son registradas para identificación de problemas?	• Catálogo formal de razones/códigos de demora (definiciones claras: espera repuesto, espera permiso/LOTO, grúa, acceso, energía, andamios, falta de personal, clima, etc.) + regla de uso obligatorio.• Procedimiento de registro (quién registra, cuándo, en qué campo, con qué nivel de detalle) y capacitación a ejecutores/supervisores.• Reporte mensual Pareto de demoras (tiempo perdido por causa/área/especialidad) + actas de revisión y acciones derivadas.• Auditoría de calidad de datos: muestra de 50 OT cerradas verificando que el código de demora (y narrativa si aplica) está registrado cuando hubo espera, y que la codificación es consistente.• Evidencia de mejora: 3 casos donde una demora recurrente generó acción (p.ej. mejora logística, permisos, kitting) y su efecto medido.
+2.1.3.2.1	¿El re-trabajo de mantenimiento (rework) es definido e identificado cuando ocurre?	• Definición formal de retrabajo (qué cuenta y qué no) + criterios (p.ej. repetición por mala calidad dentro de X días, corrección de un trabajo recién ejecutado, falla inducida por mantenimiento).• Mecanismo de identificación en SAP: campo/código obligatorio (rework Sí/No, motivo) o clasificación formal equivalente, con gobernanza (quién lo marca).• Procedimiento de registro (cómo se detecta, cómo se etiqueta, cómo se relaciona con la OT original).• Muestra defendible: 20 casos marcados como retrabajo verificando vínculo a OT original, descripción, componente, y evidencia de “falla post-mantenimiento”.
+2.1.3.2.2	¿El re-trabajo es analizado?	• Reporte periódico de retrabajo (mensual) con: volumen, HH, costo, equipos/áreas, causas aparentes y tendencia.• Pareto (top equipos/componentes/modos) y segmentación: error humano, estándar incorrecto, falta de QA/QC, repuesto equivocado, procedimiento incompleto, interferencia operativa, etc.• Análisis formal (RCA/A3/5-Why) para retrabajos de alto impacto (criterio por costo/HH/HSE/producción).• Muestra mínima: 10 análisis documentados (últimos 12 mese
+2.1.3.2.3	¿Se toma alguna acción correctiva?	• Plan de acciones correctivas ligado a hallazgos de retrabajo (dueño, fecha, estado, verificación).• Evidencia de cambios implementados: actualización de trabajo estándar (pasos/tolerancias), mejora de BOM/APL, capacitación, cambio de herramienta, mejora de inspección post-mantenimiento, endurecimiento de permisos/QA, etc.• Verificación de efectividad: antes/después en tasa de retrabajo (% OT retrabajo, HH retrabajo, repetitividad) y/o reducción en fallas post-mantto.• Muestra mínima: 10 acciones cerradas con evidencia de implementación + 3 casos con mejora cuantificada.
+
+### TRANSCRIPCION COMPLETA
+Marcel Carranza: muy bien. Bienvenidos. Estamos grabando la sesión. Participan de la entrevista el
+señor
+Marcel Carranza: Edmundo Mares, planificador senior de Peñasquito, y José Redondo, planificador
+senior también
+Marcel Carranza: de Peñasquito. Vamos a tocar un conjunto de preguntas sobre planificación.
+Gracias
+Marcel Carranza: gracias por su tiempo.
+Marcel Carranza: ¿Contestamos? Sí, sí, pueden intervenir en cualquier momento. Mi nombre es
+Edmundo Mares,
+Edmundo Mares: yo soy planificador senior de Antamina y estoy dispuesto a responder todas las
+preguntas que se me hagan con el propósito de mapear la condición de los procesos de
+planificación.
+Marcel Carranza: Muchas gracias Edmundo. Bienvenido José. Gracias Marcel. Mi nombre es José
+Redondo,
+José Redondo: soy planificador senior de Antamina, así que estamos acá para poder absorber las
+consultas que ustedes consiguieron. La dinámica de la reunión va a ser, yo voy a ir formulando las
+Marcel Carranza: preguntas, incluyendo el código y la pregunta en sí, y ustedes por favor van a
+poder responderles.
+Marcel Carranza: Cualquier inquietud me la hacen saber y vamos afinando la pregunta, va
+aclarando lo que sea
+Marcel Carranza: necesario. Muy bien. En primer lugar, en planificación con relación a el
+procedimiento
+Marcel Carranza: de planificación del trabajo. Pregunta código 2111. ¿Existe un procedimiento
+documentado de
+Marcel Carranza: planeamiento del trabajo que incluya flujogramas de procesos? José, contesta tú.
+José Redondo: Bueno Marcel, sí, sí tenemos un procedimiento de planificación, ya donde está
+escrito todo
+José Redondo: el paso a paso de la planificación de cada una de las tareas, las responsabilidades
+que
+José Redondo: compete a los planificadores, y se especifica en detalle las responsabilidades,
+José Redondo: están definidas las entradas, las salidas, y los KPIs que corresponde al área de
+planificación, ¿no?
+José Redondo: De acuerdo. Es un flujo distinto para el trabajo correctivo, para la planificación del
+otro
+José Redondo: correctivo y lo programado. En realidad el procedimiento contempla todo lo que
+involucra
+José Redondo: la creación o la planificación de las actividades de una orden de trabajo. Involucra
+tanto trabajos
+José Redondo: preventivos como correctivos programados. Hay muchos actividades que son
+similares que se
+Transcripción de entrevista (sin marcas de tiempo)
+Página 2
+José Redondo: realiza con la actividad preventiva, sin embargo, la parte correctiva, dado que no
+tienen definidos
+José Redondo: los alcances en detalle y también los materiales, es parte de la función del proceso
+que indica
+José Redondo: de cómo se debe proceder con este tipo de órdenes. Entonces sí, involucra ambos,
+la parte preventiva y correctiva.
+Edmundo Mares: Marcel, tengo una sugerencia. A mí como entrevistado me gustaría ver el flujo de
+las preguntas,
+Edmundo Mares: o sea que preguntas al frente me pones en el en el proyector, en la computadora
+o en el
+Edmundo Mares: en el televisor o la pantalla. Me pones las preguntas y me gustaría saber qué
+niveles cada pregunta tiene,
+Edmundo Mares: si debe haber un nivel superior, otro intermedio, uno más bajo y finalmente uno
+que no sé. Y me
+Edmundo Mares: hubiera gustado que me expliques la metodología que vamos a seguir antes de
+empezar, para estar
+Edmundo Mares: claro, porque de repente son muy muy abiertas y estamos contestando informes
+inadecuados. Me
+Edmundo Mares: gustaría tener más precisión del método que estás usando. ¿Cómo vamos a llevar
+esto adelante?
+Marcel Carranza: De acuerdo, de acuerdo. La idea de este trabajo es recolectar información de
+parte de
+Marcel Carranza: ustedes como informantes clave para entender el proceso de trabajo de
+planificación. Para eso
+Marcel Carranza: hemos preparado un set de preguntas de distintos elementos para toda la
+evaluación. Hay partes de
+Marcel Carranza: liderazgo, hay partes de gestión de contratistas y hay una parte, una sección en
+particular de
+Marcel Carranza: planificación. Esa sección de planificación se ha organizado de la siguiente
+manera. Hay una
+Marcel Carranza: sección de calidad y extensión del planeamiento que incluye procedimiento de
+planificación de
+Marcel Carranza: trabajo y ahí se formula una serie de preguntas, que se han buscado que sean
+preguntas específicas,
+Marcel Carranza: puntuales, puntuales para una respuesta puntual también. Luego otra categoría
+es el nivel de
+Marcel Carranza: trabajo planificado y la calidad de los planes de trabajo. Entonces esos tres
+elementos, nivel de
+Marcel Carranza: trabajo planificado, calidad de los planes de trabajo y procedimiento de
+planificación de
+Marcel Carranza: trabajo está dentro de esta área que es la calidad y extensión del planeamiento.
+Luego vamos a tocar
+Marcel Carranza: incluyendo también medición de la calidad del trabajo planificado, monitoreo de la
+calidad
+Transcripción de entrevista (sin marcas de tiempo)
+Página 3
+Marcel Carranza: del trabajo planificado, mejoras del proceso de planeamiento. Vamos a ver qué
+más hay por aquí.
+Marcel Carranza: Hasta allí. Luego se abre otro elemento que es otra área que es la base de datos
+de trabajos
+Marcel Carranza: estándares. Dentro de esto tenemos uso de trabajos estándares y decisión de
+cuándo crear un trabajo
+Marcel Carranza: estándar. En ambos temas se están formulando ahí varias preguntas y luego
+tenemos almacenamiento
+Marcel Carranza: de esos trabajos estándares y el uso de materiales en trabajos estándares. Todos
+estos cuatro
+Marcel Carranza: elementos dentro de lo que es el área de trabajos estándares. Y ya para cerrar,
+reducción de demoras
+Marcel Carranza: y retrabajos es el último tema que se abre en registro de razones para demoras
+en el trabajo
+Marcel Carranza: y análisis de retrabajos. Estas son las áreas en las cuales va a discurrir la
+entrevista.
+Edmundo Mares: ¿Cuáles son los niveles de implementación y de madurez de estas preguntas?
+Marcel Carranza: Ah, ok. Eso lo podemos explicar. De hecho, ahí como nota fuera de lo que es la
+entrevista,
+Marcel Carranza: al inicio, en la sesión de inicio donde van a estar todos los participantes para que
+Marcel Carranza: entiendan el modelo. Aquí no es necesario estar explicándoles a cada uno de
+ellos el nivel de
+Marcel Carranza: madurez para cada pregunta. Que sepan que hay cuatro niveles, eso puede ser la
+explicación inicial,
+Marcel Carranza: pero aquí es con la pregunta que nos respondan lo que tengan. Ya luego el tema
+de la madurez
+Marcel Carranza: lo vamos a poder sacar nosotros cruzando esto con los demás temas.
+Edmundo Mares: ¿No sería mejor que sepamos a los entrevistados en qué nivel es el que vamos a
+recibir en cada una de estas?
+Edmundo Mares: En función de las respuestas que demos, ¿immediatamente valorizarla ahí
+nosotros mismos contigo?
+Edmundo Mares: Por ejemplo, dice el criterio consiguir impacto significativo sobre la producción y
+se evidencia
+Edmundo Mares: la decisión de estandarizar en este caso del si es sí, si es no, si está bien
+desarrollado,
+Edmundo Mares: no está bien desarrollado. Porque todas las preguntas tienen un nivel de
+calificación, ¿no?
+Marcel Carranza: Sí, vamos a la que hemos estado entonces para que se vea ahí. Ahí está.
+Marcel Carranza: Calidad y extensión de el planamiento, procedimiento de planificación del trabajo.
+Existe un
+Marcel Carranza: procedimiento documentado de planeamiento que incluye programas. Aquí están
+los niveles.
+Marcel Carranza: Cuatro niveles. No existe proceso de procedimiento formal. La práctica es ad hoc
+y depende de las
+Transcripción de entrevista (sin marcas de tiempo)
+Página 4
+Marcel Carranza: personas. Existe de forma básica o parcial. Alcance cobertura limitada y
+aplicación inconsistente.
+Marcel Carranza: Proceso, procedimiento documentado y aplicado de forma consistente. Roles,
+entradas,
+Marcel Carranza: eso es estar bien y esto es excelencia. Bueno, eso justamente sirve mucho para
+la persona que
+Marcel Carranza: explica. Si existe, no existe o estamos en el medio. Y ahí de una vez poner la
+respuesta y aplicarla.
+Marcel Carranza: Ok, de acuerdo. Vamos con la siguiente pregunta en ese nivel, así en ese punto.
+Edmundo Mares: Porque el hecho de que exista, antes de pasar, eso es muy importante, ¿no? Yo
+puedo tener un
+Edmundo Mares: documento en un papel, como está en un libro, ¿no? Pero el hecho de que esté
+en el libro o en el papel
+Edmundo Mares: no implica que exista en la organización. La organización tiene que usarlo. Tiene
+que haberse
+Edmundo Mares: desplegado, tiene que haberse transmitido, tiene que saberse dónde está. En
+caso de que me olvide
+Edmundo Mares: algo, tengo que saber dónde, qué sistema usamos para mirar eso, ¿no? Como en
+el caso de
+Edmundo Mares: de Census, por ejemplo, yo tengo ingreso ahí y veo en este momento qué punto
+me tengo dudas y
+Edmundo Mares: lo utilizo. Por lo tanto, ahí existe. Pero que lo tenga yo guardado en mi escritorio y
+el resto
+Edmundo Mares: de mi gente, de mis subordinados, no lo tengan. Entonces, no existe, a pesar de
+que lo tenga en
+Edmundo Mares: un papel. Por eso es que es necesario tabular abajo el S0, el S1, el S2 y el S3,
+¿no?
+Edmundo Mares: En el momento. Yo diría, en el caso de Andamina, que estamos en S2 o S3, ¿no?
+Edmundo Mares: S2, perdón, S2, S2, S2, S2. Y entonces tendría que validarlo de acuerdo a las
+evidencias que podamos mostrar, ¿no?
+Marcel Carranza: Entonces, allí tienen a la mano ustedes, aquí están las evidencias tangibles,
+Marcel Carranza: el procedimiento y el fotograma. Entonces, ahí preguntaremos, ¿tienen a la
+mano? ¿Lo pueden mostrar?
+Marcel Carranza: Si lo muestran y lo tienen, genial. Si es que no lo tienen a la mano, ya es una no
+conformidad.
+Marcel Carranza: Y si es que tuvieran un problema para acceder a él, pero sí saben dónde está,
+pero no lo pueden
+Marcel Carranza: acceder por lo que fuere, ahí es donde tenemos que evaluar ya nosotros como
+consultores, si es que
+Marcel Carranza: les vamos a dar, que creo que sí, sería interesante un espacio donde ellos luego
+Marcel Carranza: puedan cargar información que nos estén debiendo. Hasta cierta fecha, nada más,
+Marcel Carranza: para complementar sus respuestas.
+Marcel Carranza: Ya. Muy bien. Vamos a la siguiente.
+Marcel Carranza: Código 2. Pregunta 2-1-1-1-2. El procedimiento de planeamiento es un
+documento controlado. Tiene
+Transcripción de entrevista (sin marcas de tiempo)
+Página 5
+Marcel Carranza: versión, aprobaciones, vigencia y difusión. Queremos saber si es que es un
+documento no
+Marcel Carranza: controlado o no existe, o si es que existe, pero tiene un control parcial, versionado
+o aprobaciones
+Marcel Carranza: incompletas, una difusión limitada y cumplimiento irregular. Si están más allá, con
+un control ya
+Marcel Carranza: documental completo, versiones, aprobaciones, vigencia y distribución y evidencia
+de difusión,
+Marcel Carranza: e incluso si ya tienen un nivel de gobernanza robusta, revisiones periódicas,
+auditoría,
+Marcel Carranza: gestión de cambios y acceso digital con trazabilidad. ¿Cómo se encuentran
+ustedes?
+José Redondo: Bueno, mira, desarrollamos el procedimiento hace unos tres años y hasta la fecha
+en su momento
+José Redondo: se aprobó, pero no han habido revisiones periódicas. Sí tiene ese procedimiento y
+José Redondo: y lo tenemos ahí almacenado en algún lugar de la red. Se distribuyó en su momento
+con
+José Redondo: los planificadores, pero no había actualizaciones hasta la fecha. Y han ingresado
+nuevos planificadores.
+José Redondo: Hicimos una difusión inicialmente, creo que con los nuevos, además por la
+comunicación con sus
+José Redondo: compañeros, es lo que se viene manejando este procedimiento.
+Marcel Carranza: Ya, pues diríamos que estamos más en un nivel S1, donde hay una difusión
+limitada y cumplimiento irregular.
+INDETERMINADO: Yo creo que sí.
+Marcel Carranza: ¿Tienen a la mano este documento?
+INDETERMINADO: Bueno, el documento cuenta con una versión, la versión
+INDETERMINADO: de creación, ya, y tiene las firmas de aprobación por parte de la gerencia de
+mantenimiento y la
+INDETERMINADO: superintendencia de planificación. Como visorial de cambios no contamos un
+registro. Y por ahí
+INDETERMINADO: debemos tener la lista de distribución o de capacitación o de difusión de lo que
+se hizo el
+INDETERMINADO: procedimiento. Hace dos años, tres años que se desarrolló.
+INDETERMINADO: Eso lo maneja de repente la gerencia, esa lista.
+INDETERMINADO: Tenemos ahí un repositorio donde almacenamos las políticas de
+mantenimiento, los procesos y los
+INDETERMINADO: procedimientos de mantenimiento, tanto de la parte de ejecución como la parte
+de seguridad.
+INDETERMINADO: Entonces, ahí tenemos armazenado este documento.
+Marcel Carranza: ¿Tienen acceso básicamente los planificadores y las refaturas?
+Marcel Carranza: Gracias. Voy a avanzar con la siguiente.
+Transcripción de entrevista (sin marcas de tiempo)
+Página 6
+Marcel Carranza: Pregunta 2.1.1.1.3. El procedimiento establece que todo trabajo preventivo y
+correctivo debe ser
+Marcel Carranza: formalmente planeado antes de ejecutarse? Sí, hay una comunicación efectiva
+que se
+Marcel Carranza: que sea verbalmente. El documento sí establece que todo trabajo es planificado,
+pero adicionalmente
+Marcel Carranza: de eso se comunica a toda la supervisión que en ningún trabajo se procede sin
+una orden de trabajo.
+Marcel Carranza: Entonces, a no ser que hay una emergencia, en el caso de emergencia sí
+inmediatamente se atiende la
+Marcel Carranza: emergencia y se regulariza posteriormente con una orden de trabajo, pero todo lo
+demás,
+Marcel Carranza: trabajos, correctivos programados, seguridad, proyectos, modificaciones,
+Marcel Carranza: todo se hace con una orden de trabajo. Y es también parte del procedimiento.
+Marcel Carranza: ¿Te dan algún tipo de excepciones? Sí, como te decía, en el caso de alguna
+Marcel Carranza: emergencia de trabajo que pueda ocurrir, en ese caso se dan excepciones. No se
+ejecuta el
+Marcel Carranza: trabajo en la emergencia sin orden de trabajo, pero posteriormente o con soporte
+planificador
+Marcel Carranza: en paralelo, muy posiblemente también se genera la OT para reportar todas las
+actividades que se
+Marcel Carranza: hicieron en el trabajo de emergencia. Es una coordinación entre ejecución y los
+planificadores.
+Marcel Carranza: En el caso de emergencia, el planificador apoya con la OT para poder sacar algún
+material del
+Marcel Carranza: almacén o retirar algún material o algún servicio que se requiera de emergencia
+en ese momento.
+Marcel Carranza: ¿Y esta información se refleja dentro de su CRP?
+Marcel Carranza: ¿O mantienen esto en una lista aparte, en un Excel?
+Marcel Carranza: No, no. Las actividades del trabajo de emergencia, las que se realizan sin OT,
+Marcel Carranza: en su momento finalmente todo se registra en la OT cuando se reporta las
+actividades,
+Marcel Carranza: la actividad que se realiza. Nosotros ejecutamos el trabajo de emergencia y en
+paralelo,
+Marcel Carranza: posteriormente se crea la orden de trabajo y en ahí registramos todo el evento,
+los materiales,
+Marcel Carranza: los recursos, qué se hizo, etcétera, para resolver el problema y cerramos la orden
+de trabajo.
+Marcel Carranza: ¿Tienen a la mano los reportes de SAP de horas hombres ejecutadas con OTES?
+Marcel Carranza: Sí. Podríamos sacar algunos OTES de trabajos de emergencia que se han
+ejecutado.
+Marcel Carranza: Como ahí reportamos las horas hombres, el detalle del trabajo, las personas que
+intervienen o que
+Marcel Carranza: estuvo a cargo de ese trabajo. Sí, podemos sacar los SAP y entregarte esa
+información.
+Transcripción de entrevista (sin marcas de tiempo)
+Página 7
+Marcel Carranza: Ahí les vamos a facilitar una carpeta para que puedan colgar esa información
+específicamente
+Marcel Carranza: para esta pregunta. De acuerdo. Esta información que vamos a colgar como
+evidencias, ¿está almacenada
+Marcel Carranza: en algún lugar? ¿Cómo vamos a manejar? ¿Hay algún código, digamos, para
+esta pregunta que yo,
+Marcel Carranza: se me está formulando para poder almacenar la información? Sí, correcto. Lo que
+vamos a tener
+Marcel Carranza: es un espacio en SharePoint creado específicamente para el proyecto con
+carpetas y esas carpetas van
+Marcel Carranza: a tener la estructura de esta evaluación. Por ejemplo, 2.1.2, decisión de cuándo
+creo un
+Marcel Carranza: trabajo estándar, 2.1.2.1, exactamente la pregunta que estamos formulando y
+dentro van a poder colocar
+Marcel Carranza: en esa carpeta las evidencias. Además, en cada carpeta vamos a dejar un
+archivo de texto donde
+Marcel Carranza: van a estar listadas esas evidencias. Por si tienen inquietudes de no recuerdan
+qué deberían
+Marcel Carranza: que poner en esa carpeta, allí van a ver que les va a decir política formal de no
+work out, work
+Marcel Carranza: without WOT, definición documentada de excepciones por emergencia, todos
+estos
+Marcel Carranza: elementos que ven aquí en pantalla lo van a tener allí a la mano, reporte exacto
+de porcentaje en
+Marcel Carranza: un archivo de texto para que sepan qué es lo que deberían de cargar ahí a esa
+carpeta. 5 hotes
+Marcel Carranza: planificadas, 5 hotes planificadas y 5 hotes de emergencia justificadas. Todo lo
+que se está
+Marcel Carranza: viendo aquí va a estar ahí en cada carpeta detallado, que es lo que se espera que
+ustedes caigan.
+Edmundo Mares: O sea, cada cada file va a tener esos nombres, ¿dónde vamos a almacenar?
+¿Eso te refieres?
+Edmundo Mares: Porque estoy viendo ahí, dice el file va a tener reportes a porcentaje de horas
+ejecutadas con
+Edmundo Mares: hotes liberadas y plan. ¿Así se va a llamar el repositorio? ¿Cómo se va? ¿Cómo lo
+Edmundo Mares: se va para poder almacenarlo? Esto de acá lo estaba pensando de esta manera.
+INDETERMINADO: No entiendo.
+Marcel Carranza: la pregunta específica, ¿no?, y dentro como ayuda lo que van a tener aquí es un
+documento
+Marcel Carranza: de texto. Así. Ustedes cuando entregan la pregunta específica van a poder abrir
+este
+Marcel Carranza: archivo de texto y van a ver qué es lo que se está buscando. Entonces ya en la
+carpeta pueden
+Transcripción de entrevista (sin marcas de tiempo)
+Página 8
+Marcel Carranza: colocar las evidencias. ¿Y hay alguna nomenclatura, algún nombre que le vamos
+a poner a cada archivo?
+Marcel Carranza: Podemos imprimir las OTs planificadas, buenas, regulares, justificadas, las
+emergencias, etcétera.
+Marcel Carranza: ¿Le pongo alguna codificación? Ideal, si es que está en poder de ustedes hacer
+esto, en buena
+Marcel Carranza: hora colocarle esta letra al inicio del archivo. Si lo pueden hacer en buena hora, si
+no ya va a ser
+Marcel Carranza: parte de nuestro proceso de nuestro presentamiento de datos. Pero si pueden
+agregarle esta primera
+Marcel Carranza: letra al inicio del archivo, genial. O sea, el archivo le vamos a dar A-1 y todo el
+texto que está
+Marcel Carranza: después de eso. Bastaría con esto, A- guion, y el nombre del archivo original, no
+hay problema.
+Marcel Carranza: Le pongo A, le pongo B, le pongo C, le pongo D. Si esta OTs planificadas, por
+ejemplo, fueran dos
+Marcel Carranza: archivos, a los dos le ponemos C adelante y con eso se va a poder procesar. Si
+eso les genera mucho
+Marcel Carranza: trabajo, mucho tiempo, no hay problema. Colocan los archivos, que es lo
+importante, la evidencia,
+Marcel Carranza: para que podamos revisar después. Ok, de acuerdo. Eso nos van a traer ustedes,
+Marcel Carranza: todo el strictura, donde vamos a poder almacenar esa información. Exacto, ya van
+a tener acceso
+Marcel Carranza: ustedes para que puedan entrar al SharePoint. Al SharePoint quizás sea
+complicado por las
+Marcel Carranza: políticas de acceso. ¿Habría alguna otra manera de poder almacenar? Porque
+quizás...
+Marcel Carranza: Si información pesada y subir quizás no se nos facilite. Quizás podríamos crear,
+nosotros
+Marcel Carranza: nos pueden entregar un árbol, donde podemos nosotros ir al elemento y buscar
+ahí la pregunta
+Marcel Carranza: y los entregables por cada pregunta. Claro, les podemos dar un archivo
+comprimido, donde dentro
+Marcel Carranza: esté toda la estructura de estas carpetas. Si no pueden ustedes acceder al
+SharePoint, van a poder
+Marcel Carranza: entrar ahí localmente, abren ese archivo, se va a abrir esa, como aquí, toda la
+rama de carpetas y
+Marcel Carranza: ahí van a poder cargar su información y nos devuelven ese archivo comprimido.
+INDETERMINADO: De acuerdo. Perfecto, gracias.
+Marcel Carranza: Continuamos. Ahí se ha unido. Bienvenido, líder Moyo, otro planificador senior de
+la
+Marcel Carranza: compañía Entamina. Bienvenido, gracias por tu tiempo. Siéntate libre de participar
+en las
+Marcel Carranza: preguntas que formulemos con las respuestas que puedas aportar. Bienvenido.
+Lider Mollo: Buen día con todos, gracias Marcel.
+Transcripción de entrevista (sin marcas de tiempo)
+Página 9
+Lider Mollo: Una pregunta Marcel, vamos a poder ingresar en la nube y tener accesos a esos, a una
+especie
+Lider Mollo: de Dropbox o Drive o OneDrive para poder subir esos, entiendo que era preocupación
+de José, ¿no?
+Marcel Carranza: Sí, justo justo, hay dos alternativas, hay una que entrega nuestro ambiente que
+vamos a poner para
+Marcel Carranza: ustedes, que es el ambiente de SharePoint, un SharePoint para el proyecto. Y es
+que existe
+Marcel Carranza: ese ambiente y entonces simplemente van a poder acceder y en la ruta, donde
+estén las preguntas,
+Marcel Carranza: van a poder cargar sus evidencias. Debería hacer un acceso simple, ¿no? Para
+que yo agarre,
+Marcel Carranza: me meto en la URL del link que me dan o pongo gestión activos y ingreso, pongo
+mi cuenta y
+Marcel Carranza: boom, de frente ahí, de ahí puedo cargar, bajar, subir, pero todo en la nube, ¿no?
+Marcel Carranza: Sí, sí, sí. Y lo más simple posible es que si ustedes ya iniciaron sesión en su
+navegador con
+Marcel Carranza: su correo electrónico para usar cualquier otra herramienta de antamina, cuando
+entren al SharePoint
+Marcel Carranza: que le estamos poniendo, ya les va a reconocer su identidad y los va a dejar
+pasar. Ni siquiera
+Marcel Carranza: van a tener que poner de nuevo su dirección, su correo electrónico, su .se, ya va
+a variar su identidad.
+Marcel Carranza: Sería bueno que lo tengas en tu página web y ahí digan Yanacocha evaluación y
+ahí entramos nosotros
+Marcel Carranza: y listo, de ahí cargamos. Sí, correcto, correcto. De hecho en futuras entrevistas lo
+vamos a explicar,
+Marcel Carranza: lo vamos a explicar en la sesión de inicio de la semana y en futuras entrevistas
+también,
+Marcel Carranza: para que esté claro para todos los participantes. Y el extremo es, si por alguna
+razón no puede
+Marcel Carranza: ser entrada a nuestro SharePoint, tiene alguna limitación, la alternativa es, les
+damos el árbol
+Marcel Carranza: en un comprimido para que lo puedan abrir ustedes en sus ambientes, en sus
+computadoras, cargan allí
+Marcel Carranza: y nos devuelven el comprimido y nosotros ya integramos la información. Es el
+peor de los casos,
+Marcel Carranza: digamos, que no pueden hacer eso. No debería haber ningún problema, si tú
+estás en la nube
+Marcel Carranza: de forma independiente y me das el acceso con mi cuenta, a mi cuenta de
+Newmo, a mi cuenta personal,
+Marcel Carranza: si quieres, yo debería ser capaz de cargar. Sí, sí, sí, ya te hemos tenido
+experiencia con Augusto,
+Marcel Carranza: que ve la información de Planta y Mina, la compañía de Antamina y ha cargado su
+información,
+Transcripción de entrevista (sin marcas de tiempo)
+Página 10
+Marcel Carranza: también con Cecilia de, no, bueno, Cecilia de Supply Chain, ha estado cargando
+información,
+Marcel Carranza: no ha tenido inconvenientes. Entonces, vamos a poder trabajar con eso. Muy
+bien, siguiente pregunta,
+Marcel Carranza: vamos a la tercera pregunta, vamos a la tercera pregunta. A la cuarta, disculpe,
+2.1.1.1.4, el procedimiento exige que todo
+Marcel Carranza: trabajo pase por un responsable central de planificación para evaluar la condición
+del
+Marcel Carranza: equipo versus la prioridad del trabajo, para evaluar la disponibilidad de los
+recursos y
+Marcel Carranza: eliminar solicitudes duplicadas. ¿Existe o no existe? Aquí hay distintos niveles
+para
+Marcel Carranza: responder esta pregunta, desde que no existe un punto central, hay trabajo
+duplicado y prioridades
+Marcel Carranza: inconsistentes, el backlog se infla hasta un nivel donde la gestión es avanzada,
+hay analítica para
+Marcel Carranza: calidad de aviso, reducción medible de duplicados y mejora contigo. ¿Cómo están
+ustedes? Pues,
+Marcel Carranza: nuevamente, es la pregunta. Ahí está.
+Lider Mollo: Ahí hay un tema, disponibilidad de recursos y eliminación de solicitudes duplicadas,
+Lider Mollo: digamos que sí lo es el planificador, pero evaluar la condición del equipo es más un
+tema de
+Lider Mollo: ejecución, o de los que hacen monitorea, y prioridad del trabajo básicamente lo hace la
+Lider Mollo: gente de ejecución, ¿saben cuán prioritarios son? Lo que ocurre es que encuentro la
+pregunta un
+Lider Mollo: tanto ambiguo, o sea, el procedimiento exige que todo trabajo pase por un responsable
+central de
+Lider Mollo: planificación, no necesariamente, el planificador sí se va a velar que haya los recursos,
+coordinar
+Lider Mollo: de repente, no sé, compra de materiales y esas cosas, pero esa parte de, yo lo
+entiendo,
+Lider Mollo: sí, de que el planificador sea el eje central y él va a evaluar la condición del equipo y ver
+Lider Mollo: la prioridad del trabajo, no. Si puedes explicar un poco más esa pregunta en específico,
+¿qué es?
+Edmundo Mares: Sí, yo lo entiendo así, si en Andamina cada área tiene un planificador senior, un
+responsable,
+Edmundo Mares: cuando yo digo área me refiero a un área, un flujo, un área de los procesos
+internos de,
+Edmundo Mares: por ejemplo, en planta, ¿no?, de operación, entonces hay un área molienda, hay
+un planificador
+Edmundo Mares: por la molienda, hay un área de flotación, hay un planificador de flotación, hay un
+área de
+Edmundo Mares: electricidad, que hay un planificador de electricidad. Ellos son los directos
+responsables
+Transcripción de entrevista (sin marcas de tiempo)
+Página 11
+Edmundo Mares: de recibir las notificaciones y crear las órdenes de trabajo con las prioridades
+correspondientes
+Edmundo Mares: y cuando dicen responsable central de planificación, yo no entiendo cómo es ese
+responsable del área
+Edmundo Mares: específica, ¿no? Para evaluar la condición del equipo, bueno, tener en cuenta la
+condición del
+Edmundo Mares: equipo en la situación actual, en el sentido de la cantidad de backlog que pueda
+tener acumulados,
+Edmundo Mares: de las dificultades que está teniendo desde el punto de vista de confiabilidad, de
+las
+Edmundo Mares: de las dificultades que está teniendo desde el punto de vista de confiabilidad o
+disponibilidad
+Edmundo Mares: y la criticidad que pueda tener cualquier trabajo en hacer esto, que esté enterado
+de la, tomándole
+Edmundo Mares: el pulso al área y al equipo que está implicado en esa notificación, ¿no? Así lo
+entiendo, ¿no?
+Edmundo Mares: Y en función de eso poner la criticidad. Eso lo tenemos, pero no pulido, ¿no?
+Está, yo diría,
+Edmundo Mares: entre dos y tres, entre uno y dos, me parece. No sé, José, si tú tienes alguna
+opinión diferente, ¿no?
+José Redondo: Sigo con muchos lineamientos que indica el mundo.
+José Redondo: El proceso actual es que pasa todo lo que es la verificación, hay un punto central de
+evaluación
+José Redondo: de los avisos que pasa a través del planificador, evalúa la calidad del aviso que
+llega, si viene
+José Redondo: con toda la información y si la información no está completa, pues se devuelve al
+originador
+José Redondo: para que pueda completarlo y en función de eso poder entender bien el
+requerimiento que se está solicitando, ¿no?
+José Redondo: Si hablas de un punto central, actualmente está compartido, lo ejecuta la parte de
+ejecución,
+José Redondo: algunos avisos, verifica si realmente es válido o el área de planificación también
+verifica si hay
+José Redondo: órdenes o avisos duplicados o ayotes que ya están abiertas que se reporta que es
+la misma anomalía,
+José Redondo: para tratarlo.
+José Redondo: Entonces, si vemos acá, no existe, no, sí tenemos un punto central por donde se
+verifican las prioridades,
+José Redondo: en realidad viene de operaciones, todo con las prioridades es en nivel cero,
+José Redondo: pero si se ve que hay un punto central, se verifica que no es válido o no es válido,
+José Redondo: en realidad viene de operaciones, todo con las prioridades es en nivel cero,
+José Redondo: ahí es todo es urgente,
+José Redondo: pero ya en coordinación con la supervisión y planeamiento se le ha sido una
+prioridad,
+José Redondo: eso hay que reforzar para definir muy bien el tema de prioridades,
+Transcripción de entrevista (sin marcas de tiempo)
+Página 12
+José Redondo: pero actualmente es un acuerdo más que el cumplimiento de una de las políticas.
+José Redondo: Sí, lo estamos hablando de, yo diría entre,
+José Redondo: estamos en un S1, digamos, la forma como estamos manejando este tema.
+Marcel Carranza: Muchas gracias.
+Marcel Carranza: La siguiente pregunta, el procedimiento define que el método de trabajo,
+Marcel Carranza: incluyendo el control de calidad de la ejecución y las recomendaciones de
+seguridad y medio ambiente,
+Marcel Carranza: se desarrolle y emita mediante un plan de trabajo estándar,
+José Redondo: a ver, el planificador prepara un word package o el paquete de trabajo,
+José Redondo: el cual incluye las recomendaciones de seguridad que se tiene que cumplir para
+ejecutar esta actividad,
+José Redondo: entonces en los paquetes de trabajo estándares ya están incluidos los diagramas o
+los puntos de bloqueo,
+José Redondo: las condiciones mínimas de seguridad que se debe cumplir para poder trabajar con
+este requerimiento,
+José Redondo: y también en el caso de si la actividad amerita que se tenga que tener cuidado con
+el medio ambiente,
+José Redondo: se vienen algunas recomendaciones.
+José Redondo: Algunas OTS tienen, pero la mayor parte solamente es texto que colocamos dentro
+de la información que está en la orden del trabajo.
+José Redondo: No tenemos desarrollado en forma completa para cada actividad una plantilla
+estándar de gestión del medio ambiente,
+José Redondo: solo para los trabajos críticos está involucrada esta recomendación, pero no en sí
+para todas las actividades.
+Marcel Carranza: ¿Y esta información la tienen en alguna biblioteca de trabajos estándar?
+José Redondo: Sí, todas las actividades están en SAP, están como trabajos estandarizados y estas
+actividades,
+José Redondo: las sistemáticas o las preventivas tienen todas estas recomendaciones, en el caso
+de las
+José Redondo: de las correctivas programadas, juntamos información que tenemos almacenada en
+nuestra base de datos,
+José Redondo: algunas plantillas de condiciones mínimas de seguridad, y también los puntos de
+bloqueo que tiene cada equipo,
+José Redondo: que le llamamos locauta-gout.
+Marcel Carranza: ¿En qué nivel se verían ustedes?
+José Redondo: No todas las OTS van completas, algunas van con información básica, yo diría que
+estamos en un S1,
+José Redondo: a pesar de que tenemos plantillas, no se usan en todas.
+Marcel Carranza: ¿Están más orientadas a lo que es OTS de alto riesgo?
+José Redondo: A los trabajos críticos y a los de alto riesgo.
+Marcel Carranza: Gracias.
+Transcripción de entrevista (sin marcas de tiempo)
+Página 13
+Edmundo Mares: Sí, yo en base al trabajo que se hizo en Antamina, tenemos procedimientos de
+mantenimiento preventivo,
+Edmundo Mares: difundidos, pero no tienen la calidad de completar con mucha precisión aparte de
+seguridad,
+Edmundo Mares: no hemos entrado en ese detalle, estamos en un proceso, y medio ambiente
+también,
+Edmundo Mares: pero sí se hizo un esfuerzo en el 2002, donde están todos los procedimientos de
+inspección y de mantenimiento preventivo,
+Edmundo Mares: donde la parte de seguridad y la parte de medio ambiente no estuvieron
+comprendidas.
+Edmundo Mares: Posteriormente entiendo que sí se ha incluido para estandarizar, pero un gran
+esfuerzo,
+Edmundo Mares: pero a la fecha debe ser revisado, y por otro lado en los temas de cambio,
+Edmundo Mares: de trabajos estándares de mantenimiento correctivo programado, sí necesita
+mucho trabajo para hacer todavía.
+Edmundo Mares: Entonces, de ese punto de vista,
+Edmundo Mares: estamos en el S1, si estoy de acuerdo, pero casi arañando el S2, después de
+tantos años de trabajo.
+Edmundo Mares: No estamos en S3.
+Edmundo Mares: Entonces yo, dado que no hemos completado para denominarnos S2, está bien
+que nos quedemos en S1,
+Edmundo Mares: pero siempre pensando que estamos cerca y que debemos cerrar esta brecha
+para llegar al S2.
+Edmundo Mares: Básicamente es eso.
+Marcel Carranza: Gracias.
+Edmundo Mares: Ahí sería bueno que yo te puedo, por ejemplo, la plantilla estándar del Plan de
+Trabajo,
+Edmundo Mares: tenemos, pero sin el S1, hay biblioteca también en físico, ella debe estar en
+Edmundo Mares: S1. Y las OTIs de alto riesgo con métodos documentados, yo creo que eso sí
+debe de hacerse,
+Edmundo Mares: tenemos que presentarte. Si no lo tienen en este momento, lo vamos a cargar en
+la carpeta que les
+Edmundo Mares: vamos a habilitar para ello. Y una vez que lo carguemos, tú marcas ahí que esos
+documentos
+Edmundo Mares: lo han puesto. Efectivamente, que cuando esté cargado y revisado, que veamos
+que es el documento
+Edmundo Mares: que ataca la evidencia que buscamos, le pondremos como cheque. Una pregunta,
+cuando estemos arriba,
+Edmundo Mares: una vez que termine esta asamblea o esta sesión, nosotros como Planner vamos
+a ver este capítulo
+Edmundo Mares: de tu evaluación. Y como tienes esos datos que están ahí a la derecha, yo te voy
+a tener que
+Edmundo Mares: cargar esos datos para que tú después, en la carpeta que tenga que ver con esta
+pregunta,
+Edmundo Mares: cargarte las evidencias en esa carpeta, ¿no?
+Transcripción de entrevista (sin marcas de tiempo)
+Página 14
+Marcel Carranza: Sí, la idea es, en principio se busca que en la misma
+Marcel Carranza: sesión se pueda mostrar una evidencia y podamos capturar la evidencia. Pero
+igual nos funciona
+Marcel Carranza: que terminando la sesión en los días siguientes, tres días siguientes, puedan
+ustedes cargar en
+Marcel Carranza: la carpeta específica de la pregunta específica la evidencia que se está buscando.
+Claro,
+Marcel Carranza: pero debería estar identificado que es 2.111, ¿no? Es correcto. Sí, entonces así
+les va a aparecer
+Marcel Carranza: cuando entregan, por ejemplo, aquí este es un ejemplo nada más, va a aparecer
+2.222 trabajo
+Marcel Carranza: de plenamiento, 2.221 se ejecute la pregunta específica y dentro incluso va a
+estar aquí
+Marcel Carranza: la lista de evidencia. Aquí están esperando que la definición documental de una
+emergencia real,
+Marcel Carranza: un reporte de SAP, cinco test planificadas buenas, cinco test planificadas
+regulares,
+Marcel Carranza: cinco test de emergencia justificadas. Eso tendría que ser con los equipos críticos,
+Marcel Carranza: porque nuestro foco de atención, nuestro modelo de gestión es un spot check de
+los
+Marcel Carranza: equipos críticos y medianamente críticos, ¿no? No te puedo traer de cualquier
+equipo,
+Marcel Carranza: sino de esos equipos, ¿no? Es correcto, sí, gracias por el comentario, por así,
+Marcel Carranza: deberíamos de hacer hincapié en eso. ¿Y por qué? Porque de esos equipos
+críticos, es más,
+Marcel Carranza: equipos críticos de la muestra que nos han compartido idealmente para que
+podamos complementar el análisis
+Marcel Carranza: que hacemos de esos equipos con esta información. Si no viene alguna
+información, por ejemplo,
+Marcel Carranza: no viene un test de emergencia justificadas para un equipo en particular, ok, ya se
+puede
+Marcel Carranza: sumar otro equipo crítico que no esté en la muestra, pero idealmente siempre
+contra la muestra.
+Marcel Carranza: Si no nos apuramos, vamos a demorar todo el día y no te va a alcanzar, con un
+solo elemento,
+Marcel Carranza: nos vamos a pasar. Sí, sí, sí, sí. A ver, ¿hago un corteja? Sí, puedes cortarlo.
+Muy bien,
+Marcel Carranza: gracias por su tiempo, gracias por sus respuestas a esta entrevista.
+
+### FORMATO DE SALIDA OBLIGATORIO
+- Devuelve la matriz en **TSV** (tab-separated) con encabezados.
+- No uses comillas dobles salvo que sea estrictamente necesario.
+- Si necesitas saltos de línea dentro de una celda, usa "\n" dentro de la celda.
